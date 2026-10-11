@@ -108,6 +108,6 @@ async def test_mul_ele_methods(async_page):
         await book.click()
         await async_page.wait_for_timeout(2000)
 
-@pytest.mark.asyncio
-async def test_mul_ele_methods(async_page):
-    await async_page.goto("https://demowebshop.trice")
+# @pytest.mark.asyncio
+# async def test_mul_ele_methods(async_page):
+#     await async_page.goto("https://demowebshop.trice")
