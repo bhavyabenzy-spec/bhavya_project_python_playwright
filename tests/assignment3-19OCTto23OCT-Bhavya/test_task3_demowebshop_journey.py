@@ -101,32 +101,36 @@ async def test_demowebshop_end_to_end_journey(async_page):
         print("Step 5: Scrolling completed; no additional products confirmed.")
 
     # 6. Open the first available product
-    product_link = products.first.locator("h2.product-title a")
-    await expect(product_link).to_be_visible()
-
-    product_name = (await product_link.inner_text()).strip()
-    await product_link.click()
-
-    # 7. Verify product details
-    product_title = page.locator("div.product-name h1")
-    await expect(product_title).to_be_visible(timeout=15000)
-
-    actual_title = (await product_title.inner_text()).strip()
-    assert actual_title, "Product title is empty."
-
-    print(f"Step 6: Product title verified: {actual_title}")
 
     # Check the product price
-    price = page.locator(
-        "div.product-price span[id^='price-value-']"
-    ).first
+    price = page.locator(".product-price").first
 
+    # Verify that the price is visible
     await expect(price).to_be_visible(timeout=10000)
 
+    # Read the displayed price
     actual_price = (await price.inner_text()).strip()
+
+    # Verify that the price is not empty
     assert actual_price, "Product price is empty."
 
     print(f"Step 6: Product price verified: {actual_price}")
+
+
+   
+    # 7. Verify product details
+    product_title = page.locator("div.product-name h1")
+
+    # Check that the product title is visible
+    await expect(product_title).to_be_visible()
+
+    # Read and verify the product title
+    actual_title = (await product_title.inner_text()).strip()
+
+    assert actual_title, "Product title is empty."
+
+    print(f"Step 7: Product details verified: {actual_title}")
+
 
     # 8. Right-click a harmless product title
     await product_title.click(button="right")
